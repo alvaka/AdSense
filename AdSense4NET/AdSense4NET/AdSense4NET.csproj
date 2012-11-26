@@ -127,6 +127,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="cache\" />
+    <Folder Include="data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Account\Web.config" />

@@ -14,7 +14,7 @@ namespace AdSense4NET.Account
         {
             int MAX_IMG_SIZE=5*1024*1024;
       
-            FileStream fs = new FileStream("D:\\cache\\f2.png", FileMode.Open);
+            FileStream fs = new FileStream(Request.PhysicalApplicationPath+"cache\\f2.png", FileMode.Open);
             BinaryReader br = new BinaryReader(fs);
             byte[] imgBuff=br.ReadBytes(MAX_IMG_SIZE);
             Response.ContentType = "image/jpeg";
