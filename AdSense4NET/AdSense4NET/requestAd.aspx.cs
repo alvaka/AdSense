@@ -11,7 +11,7 @@ namespace AdSense4NET.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+          
         }
     }
 }

@@ -3,7 +3,8 @@
 
 body   
 {
-    background: #b6b7bc;
+    background-image:url(images/bg-footer-noise.jpg);
+    background-repeat:repeat;
     font-size: .80em;
     font-family: "Helvetica Neue", "Lucida Grande", "Segoe UI", Arial, Helvetica, Verdana, sans-serif;
     margin: 0px;

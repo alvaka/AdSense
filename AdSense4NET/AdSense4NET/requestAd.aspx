@@ -9,8 +9,8 @@
 <body>
     <form id="form1" runat="server">
     <div>
-    <h3>Look at this!</h3><span><%=Request.PhysicalApplicationPath %></span>
-      <img src="adimage.aspx" />
+    <h3>Look at this!</h3>
+      <a href="10001.pv?url=http://localhost/AdSite/index.html"><img alt="AdTip" src="http://localhost/AdSite/adimages/xxx.png" /></a>
     </div>
     </form>
 </body>

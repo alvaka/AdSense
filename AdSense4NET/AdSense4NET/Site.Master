@@ -6,8 +6,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
     <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Styles/main.css" rel="stylesheet" type="text/css" />
     <asp:ContentPlaceHolder ID="HeadContent" runat="server">
-    </asp:ContentPlaceHolder>
+    </asp:ContentPlaceHolder><link rel="stylesheet" href="Styles/jquery-ui.css" />
+    <script type="text/javascript" src="Scripts/jquery-1.8.3.js"></script>
+    <script type="text/javascript" src="Scripts/jquery-ui.js"></script>
 </head>
 <body>
     <form runat="server">
@@ -15,7 +18,7 @@
         <div class="header">
             <div class="title">
                 <h1>
-                    我的 ASP.NET 应用程序
+                    网络广告监测平台
                 </h1>
             </div>
             <div class="loginDisplay">
@@ -32,8 +35,8 @@
             <div class="clear hideSkiplink">
                 <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false" IncludeStyleBlock="false" Orientation="Horizontal">
                     <Items>
-                        <asp:MenuItem NavigateUrl="~/Default.aspx" Text="主页"/>
-                        <asp:MenuItem NavigateUrl="~/About.aspx" Text="关于"/>
+                        <asp:MenuItem NavigateUrl="~/Index.aspx" Text="广告投放"/>
+                        <asp:MenuItem NavigateUrl="~/AdMonitor.aspx" Text="流量统计"/>
                     </Items>
                 </asp:Menu>
             </div>

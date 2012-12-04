@@ -8,8 +8,7 @@
         登录
     </h2>
     <p>
-        请输入用户名和密码。
-        <asp:HyperLink ID="RegisterHyperLink" runat="server" EnableViewState="false">注册</asp:HyperLink> 如果您没有帐户。
+        
     </p>
     <asp:Login ID="LoginUser" runat="server" EnableViewState="false" RenderOuterTable="false">
         <LayoutTemplate>

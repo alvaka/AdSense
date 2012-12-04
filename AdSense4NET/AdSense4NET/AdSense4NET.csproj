@@ -55,7 +55,11 @@
     <Content Include="Account\ChangePasswordSuccess.aspx" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
+    <Content Include="AdMonitor.aspx" />
+    <Content Include="index.aspx" />
     <Content Include="requestAd.aspx" />
+    <Content Include="Styles\jquery-ui.css" />
+    <Content Include="Styles\main.css" />
     <Content Include="Styles\Site.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
@@ -104,6 +108,20 @@
     </Compile>
     <Compile Include="Account\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdMonitor.aspx.cs">
+      <DependentUpon>AdMonitor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdMonitor.aspx.designer.cs">
+      <DependentUpon>AdMonitor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="index.aspx.cs">
+      <DependentUpon>index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="index.aspx.designer.cs">
+      <DependentUpon>index.aspx</DependentUpon>
     </Compile>
     <Compile Include="requestAd.aspx.cs">
       <DependentUpon>requestAd.aspx</DependentUpon>
