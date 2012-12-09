@@ -251,6 +251,7 @@ div.accountInfo
     float: left;
     text-align: left;
     width: auto;
+    height:50px;
 }
 
 .loginDisplay

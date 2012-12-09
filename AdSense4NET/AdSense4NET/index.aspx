@@ -1,9 +1,10 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="index.aspx.cs" Inherits="AdSense4NET.index"  MasterPageFile="~/Site.Master"%>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
-<h2 id="siteBanner">在监测的网站</h2>
+<h2 id="siteBanner">监测中的网站</h2>
 <ul id="siteToolBar">
    <li><a id="create-user">添加</a></li>
    <li><a id="delete-site">删除</a></li>
+   <li><a id="testJson">测试</a></li>
 </ul>
 <br />
 <div id="users-contain" class="ui-widget">
@@ -16,21 +17,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td title="10001">新华网</td>
-                <td>http://www.xinhua.com</td>
-                <td><a class="showAdLink">广告链接</a></td>
-            </tr>
-            <tr>
-                <td title="10002">人民网</td>
-                <td>http://www.renming.com</td>
-                <td><a class="showAdLink">广告链接</a></td>
-            </tr>
         </tbody>
     </table>
 </div>
 
-<div id="dialog-form" title="新建广告投放站点">
+<div id="dialog-form-adsite" title="新建监测站点">
     <fieldset>
         <label for="site-name">网站名称</label>
         <input type="text" name="site-name" id="siteName" class="text ui-widget-content ui-corner-all" />
@@ -39,46 +30,111 @@
     </fieldset>
 </div>
 
+<div id="dialog-form-adlink" title="新建广告投放链接">
+    <fieldset>
+        <label for="ad-site-id">广告位编号</label>
+        <input type="text" name="ad-site-id" id="adSiteId" disabled="true" class="text ui-widget-content ui-corner-all" />
+        <label for="ad-target-url">广告目标地址</label>
+        <input type="text" name="ad-target-url" id="adTargetUrl" class="text ui-widget-content ui-corner-all" />
+        <label for="ad-img-url">广告图片地址</label>
+        <input type="text" name="ad-img-url" id="adImgUrl" class="text ui-widget-content ui-corner-all" />
+    </fieldset>
+</div>
+
+<div id="dialog-form-adsource" title="广告位代码">
+    <fieldset>
+        <textarea  rows="6" cols="45" name="ad-source" id="adSource" class="text ui-widget-content ui-corner-all"></textarea>
+    </fieldset>
+</div>
 <div id="dialog" title="Basic dialog">
     <p></p>
 </div>
 
 <script type="text/javascript">
     $(function () {
-        var siteName = $("#siteName"),
-            siteUrl = $("#siteUrl");
+        function LoadAdSite() {
+            $.post(
+            "AdService.asmx/GetAdSites",
+            function (data) {
+                var p = $.parseJSON($(data).find("string").text());
+                $.each(p, function (index, site) {
+                    $("#users tbody").append("<tr>" +
+                            "<td title=\"" + site["SiteId"] + "\">" + site["SiteName"] + "</td>" +
+                            "<td>" + site["SiteUrl"] + "</td>" +
+                            "<td><a class='showAdLink'>广告链接</a></td>" +
+                        "</tr>");
+                });
+                //注册点击事件
+                $("tbody >tr").click(rowSelect);
 
-        $("#dialog-form").dialog({
+                //点击产生广告连接
+                $(".showAdLink").click(ShowAdLink);
+            },
+            "xml");
+        }
+        //加载数据 
+        function ShowAdLink() {
+            $("#adSiteId").val($(this).parent().siblings(":first").attr("title"));
+            $("#dialog-form-adlink").dialog("open");
+            event.stopPropagation();
+        }
+        LoadAdSite();
+
+        $("#dialog-form-adsite").dialog({
             autoOpen: false,
-            height: 300,
+            height: 250,
             width: 350,
             modal: true,
             buttons: {
-                "Ok": function () {
+                "确定": function () {
                     var bValid = true;
-
+                    var siteName = $("#siteName").val(),
+                        siteUrl = $("#siteUrl").val();
                     if (bValid) {
                         $("#users tbody").append("<tr>" +
-                            "<td>" + siteName.val() + "</td>" +
-                            "<td>" + siteUrl.val() + "</td>" +
+                            "<td>" + siteName + "</td>" +
+                            "<td>" + siteUrl + "</td>" +
                             "<td><a class='showAdLink'>广告链接</a></td>" +
                         "</tr>");
                         $(this).dialog("close");
                     }
                 },
-                Cancel: function () {
+                "取消": function () {
                     $(this).dialog("close");
                 }
-            },
-            close: function () {
-                allFields.val("").removeClass("ui-state-error");
+            }
+        });
+
+        $("#dialog-form-adlink").dialog({
+            autoOpen: false,
+            height: 320,
+            width: 350,
+            modal: true,
+            buttons: {
+                "产生代码": function () {
+                    $(this).dialog("close");
+                    $("#adSource").val("<iframe><a href=''><img src='#' /></a></iframe>");
+                    $("#dialog-form-adsource").dialog("open");
+                },
+                "取消": function () { }
+            }
+        });
+
+        $("#dialog-form-adsource").dialog({
+            autoOpen: false,
+            height: 240,
+            width: 350,
+            modal: true,
+            buttons: {
+                "复制": function () { },
+                "关闭": function () { $(this).dialog("close"); }
             }
         });
 
         $("#create-user")
             .button()
             .click(function () {
-                $("#dialog-form").dialog("open");
+                $("#dialog-form-adsite").dialog("open");
             });
 
         $("#delete-site").button();
@@ -89,19 +145,32 @@
                 $("#dialog").dialog();
             }
         });
-
-        $("tbody>tr").click(function () {
+        function rowSelect() {
             $("tbody>tr").each(function () {
                 $(this).removeClass("tr-selected");
                 $(this).attr("title", "");
             });
+
             $(this).addClass("tr-selected");
             $(this).attr("title", "selected-row");
+        }
+        $("tbody >tr").click(rowSelect);
+
+
+
+        $("#testJson").button().click(function () {
+            $.post(
+            "AdService.asmx/Json",
+            { name: "yanqizheng" },
+            function (data) {
+                //$("#dialog >p").html(data["name"]);
+                //alert($(data).find("string").text());
+                var p = $.parseJSON($(data).find("string").text());
+                alert(p.name);
+            },
+            "xml");
         });
-        $(".showAdLink").click(function () {
-            $("#dialog>p").html($(this).parent().siblings(":first").attr("title"));
-            $("#dialog").dialog();
-        });
+
     });
     </script>
 </asp:Content>

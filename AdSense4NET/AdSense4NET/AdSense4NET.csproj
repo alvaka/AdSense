@@ -56,6 +56,13 @@
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="AdMonitor.aspx" />
+    <Content Include="AdService.asmx" />
+    <Content Include="cache\ad1.png" />
+    <Content Include="cache\ad2.jpg" />
+    <Content Include="cache\ad3.jpg" />
+    <Content Include="cache\ad4.jpg" />
+    <Content Include="cache\f2.png" />
+    <Content Include="cache\hehua.png" />
     <Content Include="index.aspx" />
     <Content Include="requestAd.aspx" />
     <Content Include="Styles\jquery-ui.css" />
@@ -65,12 +72,8 @@
     <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.4.1.js" />
     <Content Include="Scripts\jquery-1.4.1.min.js" />
-    <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -116,6 +119,10 @@
     <Compile Include="AdMonitor.aspx.designer.cs">
       <DependentUpon>AdMonitor.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AdService.asmx.cs">
+      <DependentUpon>AdService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -123,6 +130,7 @@
     <Compile Include="index.aspx.designer.cs">
       <DependentUpon>index.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PvProcess.cs" />
     <Compile Include="requestAd.aspx.cs">
       <DependentUpon>requestAd.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -144,8 +152,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="cache\" />
     <Folder Include="data\" />
+    <Folder Include="logs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Account\Web.config" />
@@ -159,7 +167,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>10139</DevelopmentServerPort>
+          <DevelopmentServerPort>2877</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
