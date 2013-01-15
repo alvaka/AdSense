@@ -36,5 +36,6 @@ namespace AdSense4NET
           logFile.WriteLine(line);
           logFile.Close();
       }
+
     }
 }

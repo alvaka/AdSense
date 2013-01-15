@@ -51,7 +51,7 @@ namespace AdSense4NET
         }
 
         [WebMethod]
-        public string AddAdSites(string name, string url)
+        public string AddAdSite(string name, string url)
         {
             if (String.IsNullOrWhiteSpace(name) || String.IsNullOrWhiteSpace(url)) return "{\"status\":1,\"message\":\"parameters cannot be null or empty!\"}";
             string conStr = System.Configuration.ConfigurationManager.ConnectionStrings[0].ConnectionString;
@@ -83,9 +83,21 @@ namespace AdSense4NET
             cmd.ExecuteNonQuery();
             conn.Close();
             string siteId = pSiteID.Value.ToString();
-            return "{\"status\":0,\"data\":{\"count\":1,\"items\":[{\"SiteId\":" + siteId + "}]}}";
-            
-            
+            return "{\"status\":0,\"SiteId\":" + siteId + "}"; 
+        }
+
+        [WebMethod]
+        public void RemoveAdSite(int siteId)
+        {
+            string conStr = System.Configuration.ConfigurationManager.ConnectionStrings[0].ConnectionString;
+            SqlConnection conn = new SqlConnection(conStr);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            conn.Open();
+            cmd.CommandText = "delete from  tb_AdSite where AdSiteID="+siteId;
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
         }
     }
 }

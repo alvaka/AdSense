@@ -4,7 +4,6 @@
 <ul id="siteToolBar">
    <li><a id="create-user">添加</a></li>
    <li><a id="delete-site">删除</a></li>
-   <li><a id="testJson">测试</a></li>
 </ul>
 <br />
 <div id="users-contain" class="ui-widget">
@@ -46,6 +45,7 @@
         <textarea  rows="6" cols="45" name="ad-source" id="adSource" class="text ui-widget-content ui-corner-all"></textarea>
     </fieldset>
 </div>
+
 <div id="dialog" title="Basic dialog">
     <p></p>
 </div>
@@ -72,12 +72,30 @@
             },
             "xml");
         }
+
+        //添加站点
+        function AddAdSite(siteName, siteUrl) {
+            $.post(
+            "AdService.asmx/AddAdSite",
+            { name: siteName, url: siteUrl },
+            function (data) {
+                var p = $.parseJSON($(data).find("string").text());
+
+                $("<tr>" +
+                       "<td title=\"" + p.SiteId + "\">" + siteName + "</td>" +
+                       "<td>" + siteUrl + "</td>" +
+                       "<td><a class='showAdLink'>广告链接</a></td>" +
+                       "</tr>").bind("click", rowSelect).appendTo("#users tbody");
+            }, "xml");
+        }
+
         //加载数据 
         function ShowAdLink() {
             $("#adSiteId").val($(this).parent().siblings(":first").attr("title"));
             $("#dialog-form-adlink").dialog("open");
             event.stopPropagation();
         }
+
         LoadAdSite();
 
         $("#dialog-form-adsite").dialog({
@@ -91,11 +109,7 @@
                     var siteName = $("#siteName").val(),
                         siteUrl = $("#siteUrl").val();
                     if (bValid) {
-                        $("#users tbody").append("<tr>" +
-                            "<td>" + siteName + "</td>" +
-                            "<td>" + siteUrl + "</td>" +
-                            "<td><a class='showAdLink'>广告链接</a></td>" +
-                        "</tr>");
+                        AddAdSite(siteName, siteUrl);
                         $(this).dialog("close");
                     }
                 },
@@ -137,39 +151,25 @@
                 $("#dialog-form-adsite").dialog("open");
             });
 
-        $("#delete-site").button();
-        $("#delete-site").click(function () {
-            var selectedRow = $("tbody>tr[title='selected-row']");
+        $("#delete-site").button().click(function () {
+            var selectedRow = $("tbody>tr.tr-selected");
             if (selectedRow.length != 0) {
-                $("#dialog>p").html(selectedRow.children(":first").attr("title"));
-                $("#dialog").dialog();
+                var siteId = selectedRow.children(":first").attr("title");
+                $.post("AdService.asmx/RemoveAdSite", { siteId: siteId });
+                selectedRow.remove();
             }
         });
-        function rowSelect() {
-            $("tbody>tr").each(function () {
-                $(this).removeClass("tr-selected");
-                $(this).attr("title", "");
-            });
 
-            $(this).addClass("tr-selected");
-            $(this).attr("title", "selected-row");
+        function rowSelect() {
+            if (!$(this).hasClass("tr-selected")) {
+                $("tbody>tr.tr-selected").removeClass("tr-selected");
+                $(this).addClass("tr-selected");
+            }
         }
+
         $("tbody >tr").click(rowSelect);
 
 
-
-        $("#testJson").button().click(function () {
-            $.post(
-            "AdService.asmx/Json",
-            { name: "yanqizheng" },
-            function (data) {
-                //$("#dialog >p").html(data["name"]);
-                //alert($(data).find("string").text());
-                var p = $.parseJSON($(data).find("string").text());
-                alert(p.name);
-            },
-            "xml");
-        });
 
     });
     </script>
