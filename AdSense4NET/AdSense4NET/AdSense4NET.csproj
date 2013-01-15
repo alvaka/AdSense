@@ -61,17 +61,15 @@
     <Content Include="cache\ad2.jpg" />
     <Content Include="cache\ad3.jpg" />
     <Content Include="cache\ad4.jpg" />
-    <Content Include="cache\f2.png" />
-    <Content Include="cache\hehua.png" />
     <Content Include="index.aspx" />
     <Content Include="requestAd.aspx" />
+    <Content Include="Scripts\highcharts.js" />
+    <Content Include="Scripts\jquery-1.8.3.js" />
+    <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Styles\jquery-ui.css" />
     <Content Include="Styles\main.css" />
     <Content Include="Styles\Site.css" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.4.1.js" />
-    <Content Include="Scripts\jquery-1.4.1.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
